@@ -25,20 +25,30 @@ class CustomCrew:
 
     def run(self):
         agents = CustomAgents()
-        research_documents_collector_agent = agents.research_documents_collector()
+        link_collector_agent = agents.collect_links()
+        scrape_and_store_docs_agent = agents.scraoe_and_store_docs()
+        review_docs_agent = agents.review_docs()
+        # research_documents_collector_agent = agents.research_documents_collector()
         doc_review_note_taker_agent = agents.doc_review_note_taker()
         applicable_regulation_finder_agent = agents.applicable_regulation_finder() 
-        non_compliance_generator_agent = agents.non_compliance_generator()
+        # non_compliance_generator_agent = agents.non_compliance_generator()
 
         tasks = CustomTasks()
-        research_and_collect_docs_task = tasks.research_and_collect_docs(self.company, research_documents_collector_agent)
+        collecting_links_task = tasks.collect_links(self.company, link_collector_agent)
+        scrape_and_store_docs_task = tasks.scrape_and_store(scrape_and_store_docs_agent)
+        review_docs_task = tasks.review_docs(review_docs_agent)
+        # research_and_collect_docs_task = tasks.research_and_collect_docs(self.company, research_documents_collector_agent)
         analyze_and_take_notes_task = tasks.analyze_and_take_notes(self.company, doc_review_note_taker_agent)   
         find_and_record_regulations_task = tasks.find_and_record_regulations(self.company, applicable_regulation_finder_agent)
-        generate_non_compliance_details_task = tasks.generate_non_compliance_details(self.company, non_compliance_generator_agent)
+        # generate_non_compliance_details_task = tasks.generate_non_compliance_details(self.company, non_compliance_generator_agent)
         
         crew = Crew(
-            agents=[research_documents_collector_agent, doc_review_note_taker_agent, applicable_regulation_finder_agent, non_compliance_generator_agent],
-            tasks=[research_and_collect_docs_task, analyze_and_take_notes_task, find_and_record_regulations_task, generate_non_compliance_details_task],
+            agents=[link_collector_agent, scrape_and_store_docs_agent, review_docs_agent
+                    # doc_review_note_taker_agent, applicable_regulation_finder_agent, 
+                    ],
+            tasks=[collecting_links_task,scrape_and_store_docs_task , review_docs_task
+                    #analyze_and_take_notes_task, find_and_record_regulations_task, 
+                   ],
             verbose=2,
             process=Process.sequential,
             full_output=True,

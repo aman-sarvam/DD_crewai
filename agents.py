@@ -3,51 +3,111 @@ from textwrap import dedent
 from langchain_openai import ChatOpenAI
 from tools import web_search
 from helper_functions import print_agent_output
-from tools import scrape_website_tool, create_directory, write_file_tool, read_directory, file_read_tool
+from tools import scrape_website_tool, create_directory, write_file_tool, read_directory, file_read_tool, scrape_and_store_links_pdfs, classify_docs
 
 class CustomAgents:
     def __init__(self):
         self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4o")
-
-    def research_documents_collector(self):
-        return Agent(
-            role="Research Documents Collector",
-            backstory=dedent("""\
-                As a meticulous Research Documents Collector at a leading data aggregation firm, 
-                you have a knack for uncovering and cataloging a vast array of company-related documents. 
-                Your expertise lies in navigating the web to extract critical information about companies, 
-                including their website pages, shareholding details, product and service offerings, 
-                form fillings, and public disclosures.
-
-                Your goal is to gather comprehensive data that can help stakeholders gain insights 
-                into the operations and performance of various companies. With your exceptional skills in web scraping, 
-                data organization, and file management, you ensure that all collected information is systematically 
-                stored in directories named after the companies, making it easily accessible for future reference.
-
-                Your systematic approach and attention to detail have made you an invaluable asset in the realm of corporate research. 
-                You excel in transforming scattered data into well-organized repositories that provide a clear picture of each company’s 
-                landscape. Your role is pivotal in supporting decision-makers with accurate and up-to-date information.
+        
+    def collect_links(self):
+        return  Agent(
+            role="Link Collector",
+            backstory=dedent("""\ 
+                As a diligent Link Collector, your primary responsibility is to gather a comprehensive list of URLs related to a specific topic or company.
                 """),
             goal=dedent("""\
-                Research and find company-related documents, such as company website pages, company shareholding details, products and services, form fillings, public disclosures, etc., using the search tool. Then store the content from these websites using the scrape tool and the create_directory and write_file tools. The directory should be called the company name."""),
+                Given a company, create the directory for this company and create a file links.txt within this directory. 
+                Then search the web and store links relevant to important aspects of the company for due diligence. 
+                During research keep adding the links to the links.txt file. Each link should be on a new line. 
+                """),
             verbose=True,
             allow_delegation=False,
             llm=self.OpenAIGPT4,
             # max_iter=5,
             memory=True,
-            step_callback=lambda x: print_agent_output(x,"Research Documents Collector Agent"),
-            tools=[web_search, scrape_website_tool, create_directory, write_file_tool]
-        )   
+            step_callback=lambda x: print_agent_output(x,"Link Collector Agent"),
+            tools=[web_search, create_directory, write_file_tool]
+        )
+        
+    def scraoe_and_store_docs(self):
+        return Agent(
+            role="Scrape and Store Documents", 
+            backstory=dedent("""\ 
+                As a meticulous Scrape and Store Documents Agent, you specialize in extracting and organizing critical information from various sources.
+                """),
+            goal=dedent("""\
+                Scrape and store information in documents correctly from the list of links using scrape_and_store_links_pdfs tool. 
+                
+                """),
+            verbose=True,
+            allow_delegation=False,
+            llm=self.OpenAIGPT4,
+            # max_iter=5,
+            memory=True,
+            step_callback=lambda x: print_agent_output(x,"Scrape and Store Documents Agent"),
+            tools=[read_directory, scrape_and_store_links_pdfs]
+        )
+
+    # def research_documents_collector(self):
+    #     return Agent(
+    #         role="Research Documents Collector",
+    #         backstory=dedent("""\
+    #             As a meticulous Research Documents Collector at a leading data aggregation firm, 
+    #             you have a knack for uncovering and cataloging a vast array of company-related documents. 
+    #             Your expertise lies in navigating the web to extract critical information about companies, 
+    #             including their website pages, shareholding details, product and service offerings, 
+    #             form fillings, and public disclosures.
+
+    #             Your goal is to gather comprehensive data that can help stakeholders gain insights 
+    #             into the operations and performance of various companies. With your exceptional skills in web scraping, 
+    #             data organization, and file management, you ensure that all collected information is systematically 
+    #             stored in directories named after the companies, making it easily accessible for future reference.
+
+    #             Your systematic approach and attention to detail have made you an invaluable asset in the realm of corporate research. 
+    #             You excel in transforming scattered data into well-organized repositories that provide a clear picture of each company’s 
+    #             landscape. Your role is pivotal in supporting decision-makers with accurate and up-to-date information.
+    #             """),
+    #         goal=dedent("""\
+    #             Research and find company-related documents, such as company website pages, company shareholding details, products and services, form fillings, public disclosures, etc., using the search tool. Then store the content from these websites using the scrape tool and the create_directory and write_file tools. The directory should be called the company name."""),
+    #         verbose=True,
+    #         allow_delegation=False,
+    #         llm=self.OpenAIGPT4,
+    #         # max_iter=5,
+    #         memory=True,
+    #         step_callback=lambda x: print_agent_output(x,"Research Documents Collector Agent"),
+    #         tools=[web_search, scrape_website_tool, create_directory, write_file_tool]
+    #     )   
+    
+    def review_docs(self):
+        return Agent(
+            role = "Review docs agent",
+            backstory=dedent("""\
+                Experienced in reviewing and analyzing a wide range of documents,and adept at analyzing and classifying documents.
+                """),
+            goal=dedent("""\
+               Classify documents based on their content. To ensure all documents are related to the company. 
+                """),
+            verbose=True,
+            allow_deprivation=False,
+            llm=self.OpenAIGPT4,
+            # max_iter=5,
+            memory=True,
+            step_callback=lambda x: print_agent_output(x, "Review docs agent"),
+            tools=[classify_docs]
+        )
 
     def doc_review_note_taker(self):
         return Agent(
             role="Document Review Note Taker",
             backstory=dedent("""\
-                As an efficient Document Review Note Taker at a corporate legal department, you specialize in analyzing a variety of company-related documents. Your main tasks involve meticulous reading, understanding the content, and capturing essential points in bullet-point notes.
+                As an efficient Document Review Note Taker at a corporate legal department, you specialize in analyzing a variety of company-related documents.
+                Your main tasks involve meticulous reading, understanding the content, and capturing essential points in bullet-point notes.
 
-                Your expertise is crucial in transforming complex document details into simple, actionable notes that legal and corporate teams can quickly refer to. With a keen eye for detail and a methodical approach to documentation, you aid in the swift review and processing of corporate documents.
+                Your expertise is crucial in transforming complex document details into simple, actionable notes that legal and corporate teams can quickly refer to. 
+                With a keen eye for detail and a methodical approach to documentation, you aid in the swift review and processing of corporate documents.
 
-                You are known for your ability to distill important information and ensure that every piece of data is accounted for in your notes, making you a reliable resource for any team requiring thorough document examination and reporting.
+                You are known for your ability to distill important information and ensure that every piece of data is 
+                accounted for in your notes, making you a reliable resource for any team requiring thorough document examination and reporting.
                 """),
             goal=dedent("""\
                 Access the saved company-related documents from the specified directory. Analyze each document, take detailed notes in bullet-point format, and continuously add these notes to a file named 'notes.txt' within the same directory. Your notes should highlight key information such as company information, financial data, legal points, and operational insights, ensuring they are clear and concise for easy reference.

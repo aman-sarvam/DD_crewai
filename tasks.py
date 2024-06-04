@@ -5,25 +5,77 @@ from datetime import datetime
 class CustomTasks:
     def __tip_section(self):
         return "If you do your BEST WORK, I'll give you a $10,000 commission!"
-
-    def research_and_collect_docs(self, company, agent):
+    
+    #Adding collect links task? 
+    
+    def collect_links(self, company, agent):
         return Task(
             description=dedent(f"""
-                Research and collect comprehensive documents related to this company: '{company}'. 
-                The current time is {datetime.now()}. Focus on gathering relevant information such as company website pages, 
-                shareholding details, products and services, form fillings, public disclosures, and any other pertinent documents.
-                
-                Use advanced search techniques to find the required information, scrape the content from the identified websites, 
-                and store the collected documents in a directory named after the company.
+            Create directory in the name of the company '{company}' and create a file named 'links.txt' within this directory. 
+            Collect website links related to this company: '{company}'. 
+            The current time is {datetime.now()}. The research will cover key aspects of the company: 
+            website pages, shareholding details, products and services, form fillings, public disclosures. 
 
-                Compile all the gathered documents in an organized manner within the specified directory.
-            """),
-            agent=agent,
-			expected_output= """ 
-            A complete collection of relevant documents related to the specified company, stored in an organized directory named after the company.
-            """, 
+            Pick one aspect at a time and use the web search tool to find relevant links. Find 2 links for each aspect. Do this by giving 2 
+            as the linkes_per_query parameter to the web search tool. Do not create sections in the 'links.txt' file. It should just contains the list of links.
+            
+            Once you have identified the links, store the links in the 'links.txt' file within the company directory. Each link should be on a new line.
+            Aim to store at least 10 unique links.
+        """),
+        agent=agent,
+        expected_output=""" 
+        A complete collection of relevant documents related to the specified company, with contributions from around 90 different sources, stored in an organized directory named after the company.
+        """, 
 			# callback = save_task_output, 
         )
+        
+    
+    def scrape_and_store(self, agent):
+        return Task(
+            description=dedent(f"""
+            Using the read_directory tool read the name given to the links file. Pass the main directory name and the links file name 
+            to the scrape_and_store_links_pdfs tool which will handles the scraping and storing completely. 
+        """),
+        agent=agent,
+        expected_output=""" 
+        A complete collection of relevant documents related to the specified company, with contributions from around 90 different sources, stored in an organized directory named after the company.
+        """, 
+        )   
+        
+    
+    def review_docs(self, agent):
+        return Task(
+            description=dedent(f"""
+            Uses the classify_docs tool to classify the documents in the directory. All process is handled by the tool.
+            Just need to give it the company directory name.                  
+            """),
+            agent=agent,
+            expected_output=""" 
+            Documents in the company directory are correctly classified. 
+            """, 
+        )
+    
+
+    # def research_and_collect_docs(self, company, agent):
+    #     return Task(
+    #         description=dedent(f"""
+    #         Research and collect comprehensive documents related to this company: '{company}'. 
+    #         The current time is {datetime.now()}. The research will cover key aspects of the company: 
+    #         website pages, shareholding details, products and services, form fillings, public disclosures. 
+
+    #         Pick one aspect at a time and use the web search tool to find relevant links. Once you have identified the links, 
+    #         use the scraping tool to get the text from each link and directly dump the text content returned by the scraping tool as it is into a file in the company directory 
+    #         with the name of the file as the website name. 
+
+    #         Do not analyze the text, just dump it into the file. 
+    
+    #     """),
+    #     agent=agent,
+    #     expected_output=""" 
+    #     A complete collection of relevant documents related to the specified company, with contributions from around 90 different sources, stored in an organized directory named after the company.
+    #     """, 
+	# 		# callback = save_task_output, 
+    #     )
         
     def analyze_and_take_notes(self, company_directory, agent):
         return Task(

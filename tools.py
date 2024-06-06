@@ -5,7 +5,7 @@ import os
 import os
 import requests
 from langchain.agents import load_tools
-
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langchain_community.utilities import BingSearchAPIWrapper
@@ -24,7 +24,6 @@ import os
 from pydantic import BaseModel, Field
 from typing import Type
 from langchain.tools import BaseTool
-
 
 
 load_dotenv()
@@ -90,7 +89,7 @@ def summary(objective: str, content: str) -> str:
 
 # --------------------------------------------------------------------Defining tools 
 
-RESULTS_PER_QUESTION = 3
+# RESULTS_PER_QUESTION = 3
 
 search = BingSearchAPIWrapper()
 
@@ -291,9 +290,16 @@ read_directory = DirectoryReadTool()
 
 def download_save_pdf(directory_name: str, pdf_url: str) -> str:
     """Downloads a PDF from the given URL and saves it to the specified directory."""
-    # Define the file path
-    file_name = pdf_url.split('/')[-1]  # Get the file name from the URL
-    file_path = os.path.join(directory_name, file_name)
+    # Define the pdf_files directory
+    pdf_files_directory = os.path.join(directory_name, 'pdf_files')
+    
+    # Create the pdf_files directory if it does not exist
+    if not os.path.exists(pdf_files_directory):
+        os.makedirs(pdf_files_directory)
+    
+    # Get the file name from the URL
+    file_name = pdf_url.split('/')[-1]
+    file_path = os.path.join(pdf_files_directory, file_name)
     
     # Download the PDF and write it to the file
     try:
@@ -301,12 +307,51 @@ def download_save_pdf(directory_name: str, pdf_url: str) -> str:
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
         with open(file_path, 'wb') as file:
             file.write(response.content)
-        return f"PDF '{file_name}' downloaded successfully to directory '{directory_name}'"
+        return f"PDF '{file_name}' downloaded successfully to directory '{pdf_files_directory}'"
     except Exception as e:
         return f"Error downloading PDF '{file_name}': {e}"
 
+# Example usage:
+# print(download_save_pdf("Ess Kay Auto Finance Private Limited (SK Finance)", "https://www.bseindia.com/downloads/ipo/201782412738Ess%20Kay%20IM%2024082017.pdf"))
                                 
-                                                               
+# Using doc conversion pipeline to convert pdf to text
+def convert_pdf_to_text(directory_name: str, file_path: str) -> str:
+    """Converts a PDF file to text using the document conversion API and saves it to the specified directory."""
+    project_path = "/Users/amankothari/SarvamAI/DD_crewai"
+    new_directory_path = os.path.join(project_path, directory_name)
+
+    # Ensure the directory exists
+    if not os.path.exists(new_directory_path):
+        os.makedirs(new_directory_path)
+
+    url = "https://law-dev.sarvam.ai/api/autodraft/conversion_routes/convert"
+    conversion_type = "pdf_to_text"
+
+    with open(file_path, 'rb') as file:
+        files = {
+            'conversion_type': (None, conversion_type),
+            'file': (file_path, file, 'application/pdf')
+        }
+        response = requests.post(url, files=files)
+
+    if response.status_code == 200:
+        text_content = response.text
+
+        # Extract the PDF file name without extension
+        pdf_file_name = os.path.basename(file_path)
+        text_file_name = os.path.splitext(pdf_file_name)[0] + '-pdf.txt'
+        text_file_path = os.path.join(new_directory_path, text_file_name)
+
+        # Save the text content to a .txt file
+        with open(text_file_path, 'w') as text_file:
+            text_file.write(text_content)
+
+        return f"Text content saved successfully to '{text_file_path}'"
+    else:
+        raise Exception(f"Error converting PDF: {response.status_code}, {response.text}")
+
+# Example usage:
+# print(convert_pdf_to_text("Ambuja Cement", "Ambuja Cement/pdf_files/Code-of-fair-disclosure.pdf"))
 
 @tool("Scrape and store")
 def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "links.txt") -> str:
@@ -331,10 +376,15 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
             for line in file:
                 url = line.strip()  # Remove any leading/trailing whitespace
                 try:
+                    file_name = ""  # Initialize file_name before the try block
                     if url.endswith('.pdf'):
                         # This is a PDF, download and save it
                         download_save_pdf(directory_name, url)
                         print("PDF downloaded and saved successfully")
+                        pdf_file_path = os.path.join(new_directory_path, 'pdf_files', url.split('/')[-1])  # Construct the correct path
+                        convert_pdf_to_text(directory_name, pdf_file_path)
+                        print("PDF converted to text successfully and saved in company directory")
+                        
                     else:
                         # This is not a PDF, scrape the website content
                         content = scrape_website('get website content', url)
@@ -349,7 +399,11 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
     except Exception as e:
         return f"Error processing URLs: {e}"
     
-    
+# Example usage:
+# result = scrape_and_store_links_pdfs("Ambuja Cement", "links.txt")
+# print("Scrape and store result:", result)
+
+
 # def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "links.txt") -> str:
 #     """Processes a list of URLs from a file, downloading and saving any PDFs and scraping the content of other URLs."""
 #     # Define the project path explicitly, adjust as necessary
@@ -393,10 +447,6 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
     
 # result = scrape_and_store_links_pdfs("Ambuja Cement", "links.txt")
 # print("Scrape and store result:", result)
-
-
-from langchain_core.prompts import ChatPromptTemplate
-
 
 @tool("classify_docs")
 def classify_docs(directory_name: str) -> str:
@@ -452,3 +502,64 @@ def classify_docs(directory_name: str) -> str:
     
 # result = classify_docs("Ambuja Cement")
 # print(result)
+
+
+@tool("note_taking")
+def note_taking(directory_name: str, notes_file_name: str = "notes.txt") -> str:
+    """Researches the documents in the specified directory and compiles important information into a notes file."""
+    project_path = "/Users/amankothari/SarvamAI/DD_crewai"
+    new_directory_path = os.path.join(project_path, directory_name)
+    notes_file_path = os.path.join(new_directory_path, notes_file_name)
+    links_file_name = "links.txt"
+    
+    if not os.path.exists(new_directory_path):
+        return f"Directory '{directory_name}' does not exist."
+
+    try:
+        for file_name in os.listdir(new_directory_path):
+            if file_name.endswith('.txt') and file_name != notes_file_name:
+                file_path = os.path.join(new_directory_path, file_name, links_file_name)
+                with open(file_path, 'r') as file:
+                    content = file.read()
+
+                prompt = ChatPromptTemplate.from_messages(
+                    [
+                        (
+                            "system",
+                            "You are an expert researcher and note taker.",
+                        ),
+                        (
+                            "human",
+                            """
+                            You are researching this company: '{directory_name}' and information is provided from this document:
+                            File name:': {file_name}\n\n{content}\n\nPlease list down all important information given in this document about the '{directory_name}' in bullet points.
+                            Only return the bullet points. Do not include any introductory phrases or closing statements. 
+                            """, 
+                        ),
+                    ]
+                )
+
+                chain = prompt | OpenAIGPT4O
+                response = chain.invoke(
+                    {
+                        "directory_name": directory_name,
+                        "content": content,
+                        "file_name": file_name,
+                    }
+                )
+                print("Research Doc tool response:", response)
+                important_info = response.content
+                print("Important information:", important_info)
+
+                # Append the important information to the notes file
+                with open(notes_file_path, 'a') as notes_file:
+                    notes_file.write(f"\n\nFrom '{file_name}':\n")
+                    notes_file.write(important_info)
+
+        return f"Documents in directory '{directory_name}' have been researched and notes compiled in '{notes_file_name}'."
+    except Exception as e:
+        return f"Error researching documents: {e}"
+
+# Example usage:
+# result = note_taking("Ess Kay Fincorp Limited", "notes.txt")
+# print("Research and compile result:", result)

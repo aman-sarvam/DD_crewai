@@ -3,7 +3,8 @@ from textwrap import dedent
 from langchain_openai import ChatOpenAI
 from tools import web_search
 from helper_functions import print_agent_output
-from tools import scrape_website_tool, create_directory, write_file_tool, read_directory, file_read_tool, scrape_and_store_links_pdfs, classify_docs
+from tools import scrape_website_tool, create_directory, write_file_tool, read_directory, file_read_tool, scrape_and_store_links_pdfs, classify_docs, note_taking
+
 
 class CustomAgents:
     def __init__(self):
@@ -45,7 +46,7 @@ class CustomAgents:
             # max_iter=5,
             memory=True,
             step_callback=lambda x: print_agent_output(x,"Scrape and Store Documents Agent"),
-            tools=[read_directory, scrape_and_store_links_pdfs]
+            tools=[read_directory, file_read_tool , scrape_and_store_links_pdfs],
         )
 
     # def research_documents_collector(self):
@@ -95,6 +96,24 @@ class CustomAgents:
             step_callback=lambda x: print_agent_output(x, "Review docs agent"),
             tools=[classify_docs]
         )
+        
+    def note_taker(self):
+        return Agent(
+            role = "Note Taker",
+            backstory=dedent("""\
+                As a skilled Note Taker, you excel in capturing and organizing key information from various sources.
+                """),
+            goal=dedent("""\
+                Analyze the documents in the directory and take detailed notes on the key information.
+                """),
+            verbose=True,
+            allow_deprivation=False,
+            llm=self.OpenAIGPT4,
+            # max_iter=5,
+            memory=True,
+            step_callback=lambda x: print_agent_output(x, "Note Taker Agent"),
+            tools=[read_directory, note_taking, write_file_tool]
+        )
 
     def doc_review_note_taker(self):
         return Agent(
@@ -110,7 +129,9 @@ class CustomAgents:
                 accounted for in your notes, making you a reliable resource for any team requiring thorough document examination and reporting.
                 """),
             goal=dedent("""\
-                Access the saved company-related documents from the specified directory. Analyze each document, take detailed notes in bullet-point format, and continuously add these notes to a file named 'notes.txt' within the same directory. Your notes should highlight key information such as company information, financial data, legal points, and operational insights, ensuring they are clear and concise for easy reference.
+                Access the saved company-related documents from the specified directory. 
+                Analyze each document, take detailed notes in bullet-point format, and continuously add these notes to a file named 'notes.txt' within the same directory. 
+                Your notes should highlight key information such as company information, financial data, legal points, and operational insights, ensuring they are clear and concise for easy reference.
                 """),
             verbose=True,
             allow_deprivation=False,
@@ -126,14 +147,20 @@ class CustomAgents:
         return Agent(
             role="Applicable Regulation Finder",
             backstory=dedent("""\
-                As a dedicated Applicable Regulation Finder at a corporate legal department, your role involves meticulously analyzing notes from various company documents to identify relevant Indian regulations that apply. With a legal background and deep understanding of Indian law, you ensure that all company activities are aligned with current regulations.
+                As a dedicated Applicable Regulation Finder at a corporate legal department, 
+                your role involves meticulously analyzing notes from various company documents to identify relevant Indian regulations that apply. 
+                With a legal background and deep understanding of Indian law, you ensure that all company activities are aligned with current regulations.
 
-                Your expertise is critical in guiding corporate compliance by identifying specific laws and regulations from notes that summarize company operations, financials, and other key business aspects. This ensures that the company remains compliant with Indian legal standards and can effectively navigate the complexities of the regulatory landscape.
+                Your expertise is critical in guiding corporate compliance by identifying specific laws and regulations from notes that summarize company operations, 
+                financials, and other key business aspects. This ensures that the company remains compliant with Indian legal standards and can effectively navigate 
+                the complexities of the regulatory landscape.
                 """),
             goal=dedent("""\
-                Review the 'notes.txt' file in the specified directory, identify all mentions of company-related information, and use this data to find applicable Indian regulations. Once identified, note these regulations in a new file called 'applicable_regulations.txt' within the same directory.
+                Review the 'notes.txt' file in the specified directory, identify all mentions of company-related information, and use this data to find applicable Indian regulations. 
+                Once identified, note these regulations in a new file called 'applicable_regulations.txt' within the same directory.
 
-                Ensure that you accurately determine and document each applicable regulation based on the company information provided in the notes. This task involves thorough research using web search tools to ensure all listed regulations are current and relevant to the company's context.
+                Ensure that you accurately determine and document each applicable regulation based on the company information provided in the notes. 
+                This task involves thorough research using web search tools to ensure all listed regulations are current and relevant to the company's context.
                 """),
             verbose=True,
             allow_deprivation=False,
@@ -148,14 +175,19 @@ class CustomAgents:
         return Agent(
             role="Non-Compliance Penalty Identifier",
             backstory=dedent("""\
-                As a Non-Compliance Penalty Identifier, your primary role in the corporate legal department is to assess the consequences of failing to comply with applicable regulations. You are equipped with a comprehensive understanding of both the letter of the law and the practical implications of legal non-compliance.
+                As a Non-Compliance Penalty Identifier, 
+                your primary role in the corporate legal department is to assess the consequences of failing to comply with applicable regulations. 
+                You are equipped with a comprehensive understanding of both the letter of the law and the practical implications of legal non-compliance.
 
-                Your detailed research and analysis capabilities enable you to determine the potential financial, operational, and reputational penalties for non-compliance. This information is crucial for corporate strategy and risk management, ensuring that the company understands the severity of legal obligations.
+                Your detailed research and analysis capabilities enable you to determine the potential financial, operational, and reputational penalties for non-compliance. 
+                This information is crucial for corporate strategy and risk management, ensuring that the company understands the severity of legal obligations.
                 """),
             goal=dedent("""\
-                Analyze the 'applicable_regulations.txt' file in the specified directory to identify each listed regulation. Conduct thorough web searches and use web scraping to gather detailed information about the penalties for non-compliance with these regulations. 
+                Analyze the 'applicable_regulations.txt' file in the specified directory to identify each listed regulation. 
+                Conduct thorough web searches and use web scraping to gather detailed information about the penalties for non-compliance with these regulations. 
 
-                Summarize this information and record it in a new file called 'non_compliance_penalties.txt' within the same directory. Ensure each penalty is clearly linked to the specific regulation, providing a clear and actionable risk assessment for the company.
+                Summarize this information and record it in a new file called 'non_compliance_penalties.txt' within the same directory. 
+                Ensure each penalty is clearly linked to the specific regulation, providing a clear and actionable risk assessment for the company.
                 """),
             verbose=True,
             allow_deprivation=False,

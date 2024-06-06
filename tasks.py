@@ -16,15 +16,15 @@ class CustomTasks:
             The current time is {datetime.now()}. The research will cover key aspects of the company: 
             website pages, shareholding details, products and services, form fillings, public disclosures. 
 
-            Pick one aspect at a time and use the web search tool to find relevant links. Find 2 links for each aspect. Do this by giving 2 
+            Pick one aspect at a time and use the web search tool to find relevant links. Find 1 links for each aspect. Do this by giving 1 
             as the linkes_per_query parameter to the web search tool. Do not create sections in the 'links.txt' file. It should just contains the list of links.
             
             Once you have identified the links, store the links in the 'links.txt' file within the company directory. Each link should be on a new line.
-            Aim to store at least 10 unique links.
+            Aim to store at least 5 unique links.
         """),
         agent=agent,
         expected_output=""" 
-        A complete collection of relevant documents related to the specified company, with contributions from around 90 different sources, stored in an organized directory named after the company.
+        
         """, 
 			# callback = save_task_output, 
         )
@@ -38,7 +38,7 @@ class CustomTasks:
         """),
         agent=agent,
         expected_output=""" 
-        A complete collection of relevant documents related to the specified company, with contributions from around 90 different sources, stored in an organized directory named after the company.
+        
         """, 
         )   
         
@@ -46,15 +46,29 @@ class CustomTasks:
     def review_docs(self, agent):
         return Task(
             description=dedent(f"""
+            Do no verification of the stored documents. Directly run the classify_docs tool. 
             Uses the classify_docs tool to classify the documents in the directory. All process is handled by the tool.
             Just need to give it the company directory name.                  
             """),
             agent=agent,
             expected_output=""" 
-            Documents in the company directory are correctly classified. 
+            
             """, 
         )
+        
     
+    def note_taking(self, agent):
+        return Task(
+            description=dedent(f"""
+            Create a notes.txt file in the company directory using the write_file_tool. 
+            Uses the note_taking tool to take notes on all the documents in the directory. All process is handled by the tool.
+            Just need to give it the company directory name and the notes_file name.                  
+            """),
+            agent=agent,
+            expected_output=""" 
+            
+            """, 
+        )
 
     # def research_and_collect_docs(self, company, agent):
     #     return Task(

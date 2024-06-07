@@ -271,7 +271,7 @@ def compile_links_for_company(directory_name: str, num_results: int = 5) -> str:
     queries = [
         "website pages pf ",
         "latest news on ",
-        "financial reports of ",
+        "annual report ",
         "management team of ",
         "investor relations for "
         "products and services of ",
@@ -295,7 +295,7 @@ def compile_links_for_company(directory_name: str, num_results: int = 5) -> str:
     return f"Links compiled and written to '{links_file_path}'"
 
 # Example usage:
-# print(compile_links_for_company("Ess Kay Auto Finance Private Limited (SK Finance)", "SK Finance"))
+print(compile_links_for_company("SK Finance", 14))
 
 
 def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "links.txt") -> str:
@@ -323,9 +323,12 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
                     file_name = ""  # Initialize file_name before the try block
                     if url.endswith('.pdf'):
                         # This is a PDF, download and save it
+                        print("Processing this pdf:", url)
                         download_save_pdf(directory_name, url)
+                        
                         print("PDF downloaded and saved successfully")
                         pdf_file_path = os.path.join(new_directory_path, 'pdf_files', url.split('/')[-1])  # Construct the correct path
+                        print("Converting PDF to text...")
                         convert_pdf_to_text(directory_name, pdf_file_path)
                         print("PDF converted to text successfully and saved in company directory")
                         
@@ -344,7 +347,7 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
         return f"Error processing URLs: {e}"
     
 # Example usage:
-# result = scrape_and_store_links_pdfs("Ambuja Cement", "links.txt")
+# result = scrape_and_store_links_pdfs("SK Finance Limited", "links.txt")
 # print("Scrape and store result:", result)
 
 # Truncate text content to the token limit
@@ -365,6 +368,8 @@ def classify_docs(directory_name: str) -> str:
     new_directory_path = os.path.join(project_path, directory_name)
     rejected_files_directory = os.path.join(new_directory_path, "rejected_files")
     links_file_name = "links.txt"
+
+    pdf_directory_path = os.path.join(new_directory_path, "pdf_files")
 
     if not os.path.exists(new_directory_path):
         return f"Directory '{directory_name}' does not exist."
@@ -449,6 +454,21 @@ def classify_docs(directory_name: str) -> str:
                     rejected_file_path = os.path.join(rejected_files_directory, file_name)
                     os.rename(file_path, rejected_file_path)
                     print(f"Moved {file_name} to {rejected_files_directory}")
+                    
+                    # Delete the corresponding PDF file
+                    
+                    pdf_deleted_files_directory = os.path.join(new_directory_path, "pdf_deleted_files")
+                    if not os.path.exists(pdf_deleted_files_directory):
+                        os.makedirs(pdf_deleted_files_directory, exist_ok=True)
+                    
+    
+                    pdf_file_name = file_name.replace('-pdf.txt', '.pdf')
+                    pdf_file_path = os.path.join(pdf_directory_path, pdf_file_name)
+                    pdf_deleted_file_path = os.path.join(pdf_deleted_files_directory, pdf_file_name)
+
+                    if os.path.exists(pdf_file_path):
+                        os.rename(pdf_file_path, pdf_deleted_file_path)
+                        print(f"Moved corresponding PDF file to deleted files directory: {pdf_file_name}")
         
         return f"Documents in directory '{directory_name}' are classified."
     except Exception as e:
@@ -457,7 +477,6 @@ def classify_docs(directory_name: str) -> str:
 # print(classify_docs("Ess Kay Auto Finance Private Limited (SK Finance)"))
 # result = classify_docs("Ambuja Cement")
 # print(result)
-
 
 def split_text_into_chunks(text_content, chunk_size):
     tokenizer = tiktoken.encoding_for_model("gpt-4")
@@ -584,6 +603,166 @@ def note_taking(directory_name: str, notes_file_name: str = "notes.txt") -> str:
         return f"Error researching documents: {e}"
     
 
+# def create_segregated_notes(directory_name: str, notes_file_name: str = "notes.txt") -> str:
+#     """Generates segregated notes with citations in a new text file based on the original notes file."""
+#     project_path = "/Users/amankothari/SarvamAI/DD_crewai"
+#     new_directory_path = os.path.join(project_path, directory_name)
+#     notes_file_path = os.path.join(new_directory_path, notes_file_name)
+    
+#     if not os.path.exists(new_directory_path):
+#         return f"Directory '{directory_name}' does not exist."
+    
+#     if not os.path.exists(notes_file_path):
+#         return f"Notes file '{notes_file_name}' does not exist in directory '{directory_name}'."
+
+#     try:
+#         with open(notes_file_path, 'r') as file:
+#             notes_content = file.read()
+
+#         token_limit = 80000
+#         truncated_content = truncate_text_to_token_limit(notes_content, token_limit)
+#         escaped_content = truncated_content.replace("{", "{{").replace("}", "}}")
+
+#         prompt = ChatPromptTemplate.from_messages(
+#             [
+#                 (
+#                     "system",
+#                     """
+#                     # CONTEXT #
+#                     Due Diligence is a common task conducted when a company is going to be acquired or merged with another company. The company needs to undergo due diligence
+#                     to ensure that all the information about the company is accurate and up-to-date. This process involves reviewing all the documents, financial statements
+#                     and other legal documents of the company. The due diligence report is a summary of all the information found during this process.
+                    
+#                     ###########
+                    
+                    
+#                     # OBJECTIVE #
+                    
+#                     The current objective is to segregate the notes content provided, with citations indicating the source of each piece of information. 
+#                     Each section of the notes should be clearly marked with its source file, and the information should be organized under relevant headings.
+    
+                    
+#                     ############
+                    
+                    
+#                     # How to think #
+#                     1. Carefully read through the notes content provided.
+#                     2. Identify the source file for each piece of information and make sure to include citations in the segregated notes.
+#                     3. Organize the information under appropriate headings and sub-headings.
+#                     4. Ensure that the notes are well-structured, and each piece of information is clearly cited with its source file.
+#                     5. Do not modify any facts, as accuracy is crucial for due diligence.
+#                     6. For sections where information is not available, leave them blank and state "Require more documents".
+
+#                     Now a human will give you the notes content and the format for you to segregate and cite accordingly.
+                    
+#                     ############                 
+                    
+#                     """,
+#                 ),
+#                 (
+#                     "human",
+#                     f"""
+#                     Hey, thanks for doing this. Please read below very carefully and ensure all points are followed before you create the segregated notes.
+
+#                     The notes content provided below comes from various files. Your task is to segregate the information into relevant sections, and clearly cite each piece of information with the source file it came from.
+
+#                     Possible format for sections in the company report are as follows:
+#                     ```
+#                     Due Diligence Report
+#                     1. Overview and business of the company 
+#                         1. Business of the company
+#                         2. Key information: (from file: )
+#                             1. Business segments 
+#                             2. Branches
+#                             3. Any other key details 
+#                         3. Key findings (from file: )
+#                             1. Financial performance
+#                             2. Any other key finding 
+#                     2. Corporate Details (from file: )
+#                         1. Corporate Overview (Table format) (from file: )
+#                             1. Name of the company
+#                             2. Registered office
+#                             3. Date of Incorporation 
+#                             4. Place of Incorporation 
+#                             5. Corporate Status
+#                             6. Corporate Identification number (CIN)
+#                             7. Authorized share capital 
+#                             8. Paid up capital 
+#                             9. Directors
+#                                 1. Name, Nationality, Date of appointment, Type of director 
+#                         2. Share Capital of the company 
+#                             1. Details about paid up share capital and Equity shares 
+#                             2. Dividend declaration 
+#                                 1. Financial year, rate of dividend, amount of dividend, status of payment
+#                         3. Investments by the company: 
+#                             1. Any subsidiaries and associate companies 
+#                             2. Other investment details 
+#                         4. Constituent Document of the Company
+#                             1. MOA summary 
+#                                 1. Main objectives in the MOA
+#                             2. AOA summary
+#                         5. Board and Board Committees
+#                             1. Board composition table 
+#                             2. Board meetings:
+#                                 1. Frequency 
+#                                 2. Notice and agenda: do they comply with Companies Act 
+#                                 3. Maintenance of Minutes: do they comply with Companies Act  
+#                             3. Board committees:
+#                                 1. Committee name, composition, designation, other observations 
+#                         6. Share holder meetings: 
+#                                 1. Frequency 
+#                                 2. Notices for shareholder meeting: do they comply with Companies Act 
+#                                 3. Minutes of the shareholder meeting : do they comply with Companies Act 
+#                         7. Statutory Registers: 
+#                                 1. Company has provided us with the copies of the following statutory registers: 
+#                                         1. List of statutory registers 
+#                         8. Corporate Social Responsibility
+#                                 1. CSR Obligations 
+#                                     1. Financial year, Expenditure in Rs. (Table format)
+#                                 2. Did the company spend the required amount for CSR for each year
+#                                 3. Review of CSR committee meeting minutes 
+#                                 4. Any other information
+#                         9. Ongoing Related party transactions: 
+#                                 1. Table of related part transactions of specific year 
+#                                     1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
+#                         10. ROC Filings and Compliance Matters 
+#                                 1. ROC Filings:
+#                                     1. Review of ROC filings
+
+#                     For sections where there is no information available, leave them blank and state "Require more documents".
+#                     ```
+
+#                     Notes Content:
+#                     {escaped_content}
+#                     """,
+#                 ),
+#             ]
+#         )
+
+#         chain = prompt | OpenAIGPT4O
+#         response = chain.invoke(
+#             {
+#                 "directory_name": directory_name,
+#                 "notes_content": escaped_content,
+#             }
+#         )
+#         print("Create Segregated Notes tool response:", response)
+#         segregated_notes = response.content
+#         print("Generated Segregated Notes:", segregated_notes)
+
+#         segregated_notes_file_path = os.path.join(new_directory_path, "segregated_notes.txt")
+#         with open(segregated_notes_file_path, 'w') as segregated_notes_file:
+#             segregated_notes_file.write(segregated_notes)
+
+#         return f"Segregated notes with citations generated and saved to '{segregated_notes_file_path}'."
+#     except Exception as e:
+#         return f"Error generating segregated notes: {e}"
+    
+    
+    
+    
+    
+ 
 
 def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> str:
     """Generates a due diligence report in HTML format based on the notes file."""
@@ -621,11 +800,12 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                     # OBJECTIVE #
                     
                     The current objective is to generate a due diligence report in HTML format based on the notes file provided. The report should include all the important information
-                    and wherever the information is not available those infromation points should be collated at the end of the report. It is important that Facts are not modified else 
-                    there will be legal liability.
+                    and wherever the information is not available those sections of the report should be moved to the bottom of the report. It is important that Facts are not modified else 
+                    there will be legal liability. There is no strict numbering required for the report but the report should be well-organized and structured. 
                     
                     You will be provided with the notes content from the notes file. You need to structure this information into a well-organized report which will eventually be converted 
                     into an HTML and Docx.
+    
                     
                     ############
                     
@@ -633,9 +813,10 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                     # How to think #
                     1. Look at the company report format
                     2. Compare the information and take a call on what should be the right heads under which we can put the information.
-                    3. Wherever it is importnat for the information to be collated, it should be collated as a table or bullets.
-                    4. The report should be crisp and concise. Even the layout has to be dense.
-                    5. Begin the report with a section on key insights which should be synthesis of the notes content. You are not expected to state the facts here but make a synthesis of the facts.
+                    3. Wherever it is importnat for the information to be collated, it should be collated as a table or bullets. 
+                    4. If there is a column within a table that is empty, that column should be deleted. We cannot have incomplete columns in the main report. 
+                    5. The report should be crisp and concise. Even the layout has to be dense.
+                    6. Begin the report with a section on key insights which should be synthesis of the notes content. You are not expected to state the facts here but make a synthesis of the facts.
                     NOTE: Synthesis is explaining the understanding of the facts in a concise manner with some extrapolation on things to look out for.
                     
                     Now a human will give you details on the sections that should be available in the company report and how to format the HTML.
@@ -646,100 +827,106 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                 ),
                 (
                     "human",
-                    f"""
-                    Hey, thanks for doing this. Please read below very very carefully and ensure all points are followed before you create the report.
                     
-                    Sections that should be available in the company report are as follows:
-                    ```
-                    1. Overview and business of the company 
-                        1. Business of the company
-                        2. Key information:
-                            1. Business segments
-                            2. Branches
-                            3. Any other key details 
-                        3. Key findings 
-                            1. Financial performance(preferably in table format) 
-                            2. Any other key finding 
-                    2. Corporate Details 
-                        1. Corporate Overview (Table format)
-                            1. Name of the company
-                            2. Registered office
-                            3. Date of Incorporation 
-                            4. Place of Incorporation 
-                            5. Corporate Status
-                            6. Corporate Identification number (CIN)
-                            7. Authorized share capital 
-                            8. Paid up capital 
-                            9. Directors
-                                1. Name, Nationality, Date of appointment, Type of director (Separate table)
-                        2. Share Capital of the company 
-                            1. Details about paid up share capital and Equity shares 
-                            2. Dividend declaration 
-                                1. Financial year, rate of dividend, amount of dividend, status of payment (Table format)
-                        3. Investments by the company: 
-                            1. Any subsidiaries and associate companies 
-                            2. Other investment details 
-                        4. Constituent Document of the Company
-                            1. MOA summary 
-                                1. Main objectives in the MOA
-                            2. AOA summary
-                        5. Board and Board Committees
-                            1. Board composition table 
-                            2. Board meetings:
-                                1. Frequency 
-                                2. Notice and agenda: do they comply with Companies Act 
-                                3. Maintenance of Minutes: do they comply with Companies Act  
-                            3. Board committees:
-                                1. Committee name, composition, designation, other observations  (Table format)
-                            4. Share holder meetings: 
-                                1. Frequency 
-                                2. Notices for shareholder meeting: do they comply with Companies Act 
-                                3. Minutes of the shareholder meeting : do they comply with Companies Act 
-                            5. Statutory Registors: 
-                                1. Company has provided us with the copes of the following statutory registers: 
-                                        1. List of statutory registers 
-                            6. Corporate Social Responsibility
-                                1. CSR Obligations 
-                                    1. Financial year, Expenditure in Rs. (Table format)
-                                2. Did the company spend the required amount for CSR for each year
-                                3. Review of CSR committee meeting minutes 
-                                4. Any other information
-                            7. Ongoing Related party transactions: 
-                                1. Table of related part transactions of specific year 
-                                    1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
-                            8. ROC Fillings and Compliance Matters 
-                                1. ROC Fillings:
-                                    1. Review of ROC fillings
-                    ```
-                     
-                    Include all relevant sections such as company overview, key findings, risks, and recommendations.
-                    - Use Times New Roman font, and single spacing, Text color should be black.This should apply to the tables in the html as well. 
-                    Use internal CSS for this.  
-                    - Use <h1>, <h2>, <h3>, etc. for headings and subheadings.
-                    - Use <p> for paragraphs.
-                    - Use <ul> for unordered lists and <ol> for ordered lists.
-                    - Use <table> for tabular data, with appropriate <tr>, <th>, and <td> tags. Use tables whenever possible. 
-                    - Use <a> for hyperlinks.
-                    - Use <b> or <strong> for bold text and <i> or <em> for italic text.
-                    - Use <img> to embed images.
-                    - Use <div> for block-level content and <span> for inline content.
-                    - Use <br> for line breaks within text.
-                    - Ensure the HTML is clean, well-structured, and follows best practices for readability and accessibility.
-                    
-                    Things to note about HTML:
-                    - When thinking about HTML formatting do think carefully and put points as bullets or sub-bullets. Whever bullets or sub-bullets
-                    are required, they SHOULD BE INDENTED.
-                    - Avoid tables within tables. If needed seperate the tables.
-                    - Certain sections are empty, it should be collated and put at the end. Convert this into a requisition list.
-                    - You are allowed to deviate from the provided format if you think it is necessary. But please do avoid tables within Table.
-                    
-                    Do not include any introductory or closing statements in the report. 
-                    DO NOT MAKE UP ANY INFORMATION. If for a section there is no information available, just ADD "Require more documents for this section" and make the font color red for this.
+                            f"""
+                            Hey, thanks for doing this. Please read below very very carefully and ensure all points are followed before you create the report.
+                            
+                            Possible sections in the company report are as follows:
+                            ```
+                            Possilbe format for main report: 
+                        
+                            Due Dilligence Report
+                            1. Overview and business of the company 
+                                1. Business of the company
+                                2. Key information: (from file: )
+                                    1. Business segments 
+                                    2. Branches
+                                    3. Any other key details 
+                                3. Key findings (from file: )
+                                    1. Financial performance(preferably in table format) 
+                                    2. Any other key finding 
+                            2. Corporate Details (from file: )
+                                1. Corporate Overview (Table format) (from file: )
+                                    1. Name of the company
+                                    2. Registered office
+                                    3. Date of Incorporation 
+                                    4. Place of Incorporation 
+                                    5. Corporate Status
+                                    6. Corporate Identification number (CIN)
+                                    7. Authorized share capital 
+                                    8. Paid up capital 
+                                    9. Directors
+                                        1. Name, Nationality, Date of appointment, Type of director (Separate table)
+                                2. Share Capital of the company 
+                                    1. Details about paid up share capital and Equity shares 
+                                    2. Dividend declaration 
+                                        1. Financial year, rate of dividend, amount of dividend, status of payment (Table format)
+                                3. Investments by the company: 
+                                    1. Any subsidiaries and associate companies 
+                                    2. Other investment details 
+                                4. Constituent Document of the Company
+                                    1. MOA summary 
+                                        1. Main objectives in the MOA
+                                    2. AOA summary
+                                5. Board and Board Committees
+                                    1. Board composition table 
+                                    2. Board meetings:
+                                        1. Frequency 
+                                        2. Notice and agenda: do they comply with Companies Act 
+                                        3. Maintenance of Minutes: do they comply with Companies Act  
+                                    3. Board committees:
+                                        1. Committee name, composition, designation, other observations  (Table format)
+                                6. Share holder meetings: 
+                                        1. Frequency 
+                                        2. Notices for shareholder meeting: do they comply with Companies Act 
+                                        3. Minutes of the shareholder meeting : do they comply with Companies Act 
+                                7. Statutory Registors: 
+                                        1. Company has provided us with the copes of the following statutory registers: 
+                                                1. List of statutory registers 
+                                8. Corporate Social Responsibility
+                                        1. CSR Obligations 
+                                            1. Financial year, Expenditure in Rs. (Table format)
+                                        2. Did the company spend the required amount for CSR for each year
+                                        3. Review of CSR committee meeting minutes 
+                                        4. Any other information
+                                9. Ongoing Related party transactions: 
+                                        1. Table of related part transactions of specific year 
+                                            1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
+                                10. ROC Fillings and Compliance Matters 
+                                        1. ROC Fillings:
+                                            1. Review of ROC fillings
+                                    
+                            ```
+                            
+                            DO NOT MAKE UP ANY INFORMATION. If for a section there is no information available, move that entire section at the end of the main report. This may require you to reformat the report and 
+                            change the numbering.  If there is a column within a table that is empty, that column should be deleted. We cannot have incomplete columns in the main report. 
+                            For someone reading this report we do not want missing information to be shown in various places. Hence, these sections needs to be placed at the end. 
+                            just ADD "Require more documents for these sections:" as the title and add the sections below this heading.
+                            
+                            
+                            For example: If you do not have enough information for the Share Capital of the company, Investments by the company, Board meetings, Corposate Social Responsibility section, add these
+                            sections at the end of the report.  
+                            
+                            Formatting: 
+                            - Use Times New Roman font, and single spacing, Text color should be black. This should apply to the tables in the html as well. Use internal CSS for this.  
+                            - Ensure the HTML is clean, well-structured, and follows best practices for readability and accessibility.
+                            
+                            Things to note about HTML:
+                            - When thinking about HTML formatting do think carefully and put points as bullets or sub-bullets. Whever bullets or sub-bullets
+                            are required, they SHOULD BE INDENTED.
+                            - Indentation is very IMPORTANT
+                            - Avoid tables within tables. If needed seperate the tables.
+                            - You are allowed to deviate from the provided format if you think it is necessary. But please do avoid tables within Table.
+                            
+                            Do not include any introductory or closing statements in the report. Do not start the reposse with "```html".
+                            Start directly with <!DOCTYPE html>. 
+                            
+                            The notes also mentions while file the notes are from. Be sure to include the name of the file with the appropriate sections.
 
-                    Notes:
-                    {escaped_content}
-                    """,
-                ),
+                            Notes:
+                            {escaped_content}
+                            """,
+                    ),
             ]
         )
 
@@ -766,6 +953,15 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
 # Example usage:
 # print(create_report("SK Finance Limited"))
 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
  
 def convert_html_to_docx(directory_name: str, file_path: str) -> str:
     """Converts an HTML file to a DOCX file using the document conversion API and saves it to the specified directory."""

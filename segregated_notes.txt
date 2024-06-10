@@ -1,0 +1,126 @@
+Sure, I have carefully read through the notes content provided. Below is the segregated notes content organized under relevant headings, with clear citations indicating the source file for each piece of information.
+
+```
+Due Diligence Report
+
+1. Overview and Business of the Company
+    1. Business of the company
+        - Finance company with a differentiated approach specializing in facilitating financial inclusion for the unserved and underserved sections of society. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        - Over 29 years of experience as a trusted NBFC in India. (Source: 'https:__www.skfin.in_about_founder-desk.txt')
+        - Known for a customer-first and personalized approach. (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+    2. Key information: 
+        1. Business segments 
+            - Business segments include Commercial Vehicles, Tractors, Cars, Two-wheelers, and MSMEs. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        2. Branches
+            - Total branches: 423 across 10 states and union territories. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        3. Any other key details 
+            - Presence in states: Rajasthan, Haryana, Madhya Pradesh, Chhattisgarh, Gujarat, Himachal Pradesh, Maharashtra, Uttarakhand, Punjab, and Delhi NCR. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - Over 60 active lending partnerships with major institutions. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - Investor profiles include Norwest Venture Partners, Texas Pacific Group, Evolvence Coinvest, Baring Private Equity India AIF, Karma Holdings Mauritius Limited, IIFL Special Opportunities Fund, MIT Investment Management Company, and others. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+    3. Key findings
+        1. Financial performance
+            - Key performance indicators for 2021-22: AUM ₹4,714 crore, Disbursements ₹3,226 crore, Net Profit ₹143 crore, Capital Adequacy 30.4%. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - Gross Stage 3 assets: 2.83%, Net Stage 3 assets: 2.04%. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        2. Any other key finding
+            - Digital initiatives include AI chatbot for customer service, integrated WhatsApp communication, paperless processes, and AI-based recommendation systems. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - ESG focus on environmental sustainability, social responsibility, and governance. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - Human Resource initiatives include training programs, employee well-being measures, and diversity inclusion. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            - CSR activities include support for education, healthcare, animal welfare, road safety, and environment sustainability. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+            
+2. Corporate Details
+    1. Corporate Overview (Table format)
+        1. Name of the company: SK Finance Limited (Source: 'https:__www.skfin.in_about_founder-desk.txt')
+        2. Registered office: 36, Dhuleshwar Garden, Jaipur-302001 (Source: 'https:__www.skfin.in_mediacenter.txt')
+        3. Date of Incorporation: 1994 (Source: 'https:__www.skfin.in_about_founder-desk.txt')
+        4. Place of Incorporation: Rajasthan, India (Source: 'https:__www.skfin.in_about_founder-desk.txt')
+        5. Corporate Status: Active as of 02 June, 2024 (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+        6. Corporate Identification number (CIN): U65923RJ1994PLC009051 (Source: 'https:__www.skfin.in_.txt')
+        7. Authorized share capital: ₹30,00,00,000 divided into 15,00,00,000 equity shares of ₹2 each (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        8. Paid up capital: ₹5,81,66,148.25 (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        9. Directors:
+            1. Amar Lal Daultani: Chairperson and Non-Executive Independent Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            2. Rajendra Kumar Setia: Managing Director and Chief Executive Officer (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            3. Yash Setia: Whole-time Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            4. Anand Raghavan: Non-Executive Independent Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            5. Nanda Sameer Dave: Non-Executive Independent Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            6. Mukul Mathur: Non-Executive Independent Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            7. Simit Batra: Non-Executive Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+            8. Debanshi Basu: Non-Executive Director (Source: 'https:__www.skfin.in_about_board-of-directors.txt')
+    2. Share Capital of the company
+        1. Details about paid up share capital and Equity shares: Paid-up equity share capital of ₹5,81,66,148.25 (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+        2. Dividend declaration: Require more documents
+    3. Investments by the company:
+        1. Any subsidiaries and associate companies: Require more documents
+        2. Other investment details: Require more documents
+    4. Constituent Document of the Company
+        1. MOA summary: Require more documents
+            1. Main objectives in the MOA: Require more documents
+        2. AOA summary: Require more documents
+    5. Board and Board Committees
+        1. Board composition table: Provided above in Corporate Overview section
+        2. Board meetings:
+            1. Frequency: Require more documents
+            2. Notice and agenda: do they comply with Companies Act: Require more documents
+            3. Maintenance of Minutes: do they comply with Companies Act: Require more documents
+        3. Board committees:
+            1. Committee name, composition, designation, other observations:
+                - Audit Committee, Nomination and Remuneration Committee, Corporate Social Responsibility Committee, Risk Management Committee, IT Strategy Committee, Executive Committee, and Asset Liability Management Committee. (Source: 'Annual_Report_21_22_0df1be1962-pdf.txt')
+    6. Shareholder meetings:
+        1. Frequency: Require more documents
+        2. Notices for shareholder meeting: do they comply with Companies Act: Require more documents
+        3. Minutes of the shareholder meeting: do they comply with Companies Act: Require more documents
+    7. Statutory Registers:
+        1. Company has provided us with the copies of the following statutory registers: Require more documents
+    8. Corporate Social Responsibility
+        1. CSR Obligations
+            1. Financial year, Expenditure in Rs. (Table format): Require more documents
+        2. Did the company spend the required amount for CSR for each year: Require more documents
+        3. Review of CSR committee meeting minutes: Require more documents
+        4. Any other information: Require more documents
+    9. Ongoing Related party transactions:
+        1. Table of related part transactions of specific year: Require more documents
+            1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year: Require more documents
+    10. ROC Filings and Compliance Matters
+        1. ROC Filings:
+            1. Review of ROC filings: Require more documents
+
+3. Financial Details
+    1. Revenue / turnover is INR 100 cr - 500 cr for the financial year ending on 31 March, 2019. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    2. Net worth has increased by 169.11% for the financial year ending 31 March, 2019. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    3. EBITDA has increased by 65.34% for the financial year ending 31 March, 2019. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    4. Total assets have increased by 63.24% for the financial year ending 31 March, 2019. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    5. Liabilities have increased by 4.26% for the financial year ending 31 March, 2019. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    6. Debt/Equity Ratio is 2.48. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    7. Return on Equity is 9.41%. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    8. Fixed Assets have increased by 30.71%. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    9. Current Assets have increased by 84.51%. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    10. Current Liabilities have increased by 4.26%. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    11. Trade Receivables have decreased by 88.88%. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+    12. Current Ratio is 1.61. (Source: 'https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt')
+
+4. IPO Details
+    - SK Finance has filed preliminary draft papers with SEBI to raise ₹2,200 crore through an IPO. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - The IPO includes a fresh issue of equity shares worth ₹500 crore and an offer for sale (OFS) of up to ₹1,700 crore by promoters and investor shareholders. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Promoters: Rajendra Kumar Setia, Yash Setia, and Rajendra Kumar Setia HUF. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - OFS details: 
+        - Norwest Venture Partners X-Mauritius and TPG Growth IV SF PTE Ltd will offload shares worth ₹700 crore each. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+        - Evolvence Coinvest I will divest shares worth ₹75 crore. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+        - Evolvence India Fund III Ltd will sell shares worth ₹25 crore. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+        - Rajendra Kumar Setia and Rajendra Kumar Setia HUF will offload shares worth ₹180 crore and ₹20 crore, respectively. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Proceeds from the fresh issue will be used to augment the capital base for future business requirements and general corporate purposes. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Book-running lead managers: Kotak Mahindra Capital Company Ltd, Jefferies India Private Ltd, Motilal Oswal Investment Advisors Ltd, and Nomura Financial Advisory and Securities (India) Private Ltd. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - SK Finance raised ₹1,328 crore from investors earlier this year. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - The company operates in two verticals: vehicle financing and financing for Micro, Small, and Medium Enterprises (MSMEs). (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Presence: 11 states and one union territory with 535 branches as of December 2023. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Registered as a non-deposit taking non-banking finance company middle layer (NBFC ML) with the RBI. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - Vehicle financing: Offers loans for used and new commercial vehicles (excluding medium and heavy commercial vehicles), cars, tractors, and new two-wheelers. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - MSME lending: Provides loans for working capital requirements, backed by assets, to mid to low-income customers, predominantly self-employed, unbanked, or underbanked individuals in rural and semi-urban areas. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - According to a CRISIL report, the overall vehicle financing segment in India was around ₹11.85 lakh crore as of fiscal 2023, with a CAGR of around 11% from fiscal 2019. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+    - The outstanding credit in the vehicle financing segment is expected to grow at a CAGR of 16-18% from fiscal 2023 to fiscal 2027, reaching ₹21 lakh crore. (Source: 'https:__www.livemint.com_market_ipo_sk-finance-files-drhp-with-sebi-to-raise-rs-2-200-crore-via-ipo-details-here-11714650628229.html.txt')
+
+5. Media Mentions and CSR Activities
+    - SK Finance Limited organized 'Dayitva' a blood donation camp in more than 20 cities across India on December 4th, 2023. (Source: 'https:__www.skfin.in_mediacenter.txt')
+    - SK Jodhpur Marathon 2023 took place on December 17, 2023. (Source: 'https:__www.skfin.in_mediacenter.txt')
+    - SK Raipur Marathon 2024 occurred on March 3, 2024, flagged off by Bollywood actress Mahima Chaudhary. (Source: 'https:__www.skfin.in_mediacenter.txt')
+    - SK Finance presented an ambulance to the Jaitsar PHC. (Source: 'https:__www.skfin.in_mediacenter.txt')
+    - SK Foundation

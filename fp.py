@@ -115,7 +115,6 @@ def search(query, num_results=5):
 
     return links
 
-# Example usage:
 # search_links = search("SK Finance", 24)
 # print("Search links:", search_links)
 # print("Length of search links: ", len(search_links))
@@ -256,7 +255,6 @@ def convert_pdf_to_text(directory_name: str, file_path: str) -> str:
     else:
         raise Exception(f"Error converting PDF: {response.status_code}, {response.text}")
 
-# Example usage:
 # print(convert_pdf_to_text("Ambuja Cement", "Ambuja Cement/pdf_files/Code-of-fair-disclosure.pdf"))
 
 def compile_links_for_company(directory_name: str, num_results: int = 5) -> str:
@@ -294,8 +292,7 @@ def compile_links_for_company(directory_name: str, num_results: int = 5) -> str:
 
     return f"Links compiled and written to '{links_file_path}'"
 
-# Example usage:
-print(compile_links_for_company("SK Finance", 14))
+# print(compile_links_for_company("SK Finance", 14))
 
 
 def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "links.txt") -> str:
@@ -346,7 +343,6 @@ def scrape_and_store_links_pdfs(directory_name: str,  links_file_name: str = "li
     except Exception as e:
         return f"Error processing URLs: {e}"
     
-# Example usage:
 # result = scrape_and_store_links_pdfs("SK Finance Limited", "links.txt")
 # print("Scrape and store result:", result)
 
@@ -554,7 +550,6 @@ def get_important_info(directory_name, file_name, content):
     )
     return response.content
 
-
 def note_taking(directory_name: str, notes_file_name: str = "notes.txt") -> str:
     """Researches the documents in the specified directory and compiles important information into a notes file."""
     project_path = "/Users/amankothari/SarvamAI/DD_crewai"
@@ -603,164 +598,165 @@ def note_taking(directory_name: str, notes_file_name: str = "notes.txt") -> str:
         return f"Error researching documents: {e}"
     
 
-# def create_segregated_notes(directory_name: str, notes_file_name: str = "notes.txt") -> str:
-#     """Generates segregated notes with citations in a new text file based on the original notes file."""
-#     project_path = "/Users/amankothari/SarvamAI/DD_crewai"
-#     new_directory_path = os.path.join(project_path, directory_name)
-#     notes_file_path = os.path.join(new_directory_path, notes_file_name)
+def create_segregated_notes(directory_name: str, notes_file_name: str = "notes.txt") -> str:
+    """Generates segregated notes with citations in a new text file based on the original notes file."""
+    project_path = "/Users/amankothari/SarvamAI/DD_crewai"
+    new_directory_path = os.path.join(project_path, directory_name)
+    notes_file_path = os.path.join(new_directory_path, notes_file_name)
     
-#     if not os.path.exists(new_directory_path):
-#         return f"Directory '{directory_name}' does not exist."
+    if not os.path.exists(new_directory_path):
+        return f"Directory '{directory_name}' does not exist."
     
-#     if not os.path.exists(notes_file_path):
-#         return f"Notes file '{notes_file_name}' does not exist in directory '{directory_name}'."
+    if not os.path.exists(notes_file_path):
+        return f"Notes file '{notes_file_name}' does not exist in directory '{directory_name}'."
 
-#     try:
-#         with open(notes_file_path, 'r') as file:
-#             notes_content = file.read()
+    try:
+        with open(notes_file_path, 'r') as file:
+            notes_content = file.read()
 
-#         token_limit = 80000
-#         truncated_content = truncate_text_to_token_limit(notes_content, token_limit)
-#         escaped_content = truncated_content.replace("{", "{{").replace("}", "}}")
+        token_limit = 80000
+        truncated_content = truncate_text_to_token_limit(notes_content, token_limit)
+        escaped_content = truncated_content.replace("{", "{{").replace("}", "}}")
 
-#         prompt = ChatPromptTemplate.from_messages(
-#             [
-#                 (
-#                     "system",
-#                     """
-#                     # CONTEXT #
-#                     Due Diligence is a common task conducted when a company is going to be acquired or merged with another company. The company needs to undergo due diligence
-#                     to ensure that all the information about the company is accurate and up-to-date. This process involves reviewing all the documents, financial statements
-#                     and other legal documents of the company. The due diligence report is a summary of all the information found during this process.
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    """
+                    # CONTEXT #
+                    Due Diligence is a common task conducted when a company is going to be acquired or merged with another company. The company needs to undergo due diligence
+                    to ensure that all the information about the company is accurate and up-to-date. This process involves reviewing all the documents, financial statements
+                    and other legal documents of the company. The due diligence report is a summary of all the information found during this process. 
                     
-#                     ###########
+                    ###########
                     
                     
-#                     # OBJECTIVE #
+                    # OBJECTIVE #
                     
-#                     The current objective is to segregate the notes content provided, with citations indicating the source of each piece of information. 
-#                     Each section of the notes should be clearly marked with its source file, and the information should be organized under relevant headings.
+                    The current objective is to segregate the notes content provided, with citations indicating the source of each piece of information. 
+                    Each section of the notes should be clearly marked with its source file, and the information should be organized under relevant headings.
     
                     
-#                     ############
+                    ############
                     
                     
-#                     # How to think #
-#                     1. Carefully read through the notes content provided.
-#                     2. Identify the source file for each piece of information and make sure to include citations in the segregated notes.
-#                     3. Organize the information under appropriate headings and sub-headings.
-#                     4. Ensure that the notes are well-structured, and each piece of information is clearly cited with its source file.
-#                     5. Do not modify any facts, as accuracy is crucial for due diligence.
-#                     6. For sections where information is not available, leave them blank and state "Require more documents".
+                    # How to think #
+                    1. Carefully read through the notes content provided.
+                    2. Identify the source file for each piece of information and make sure to include citations in the segregated notes.
+                    3. Organize the information under appropriate headings and sub-headings.
+                    4. Ensure that the notes are well-structured, and each piece of information is clearly cited with its source file.
+                    5. Do not modify any facts, as accuracy is crucial for due diligence.
+                    6. For sections where information is not available, leave them blank and state "Require more documents".
 
-#                     Now a human will give you the notes content and the format for you to segregate and cite accordingly.
+                    Now a human will give you the notes content and the format for you to segregate and cite accordingly.
                     
-#                     ############                 
+                    ############                 
                     
-#                     """,
-#                 ),
-#                 (
-#                     "human",
-#                     f"""
-#                     Hey, thanks for doing this. Please read below very carefully and ensure all points are followed before you create the segregated notes.
+                    """,
+                ),
+                (
+                    "human",
+                    f"""
+                    Hey, thanks for doing this. Please read below very carefully and ensure all points are followed before you create the segregated notes.
 
-#                     The notes content provided below comes from various files. Your task is to segregate the information into relevant sections, and clearly cite each piece of information with the source file it came from.
+                    The notes content provided below comes from various files. Your task is to segregate the information into relevant sections, and clearly cite each piece of information with the source file it came from.
 
-#                     Possible format for sections in the company report are as follows:
-#                     ```
-#                     Due Diligence Report
-#                     1. Overview and business of the company 
-#                         1. Business of the company
-#                         2. Key information: (from file: )
-#                             1. Business segments 
-#                             2. Branches
-#                             3. Any other key details 
-#                         3. Key findings (from file: )
-#                             1. Financial performance
-#                             2. Any other key finding 
-#                     2. Corporate Details (from file: )
-#                         1. Corporate Overview (Table format) (from file: )
-#                             1. Name of the company
-#                             2. Registered office
-#                             3. Date of Incorporation 
-#                             4. Place of Incorporation 
-#                             5. Corporate Status
-#                             6. Corporate Identification number (CIN)
-#                             7. Authorized share capital 
-#                             8. Paid up capital 
-#                             9. Directors
-#                                 1. Name, Nationality, Date of appointment, Type of director 
-#                         2. Share Capital of the company 
-#                             1. Details about paid up share capital and Equity shares 
-#                             2. Dividend declaration 
-#                                 1. Financial year, rate of dividend, amount of dividend, status of payment
-#                         3. Investments by the company: 
-#                             1. Any subsidiaries and associate companies 
-#                             2. Other investment details 
-#                         4. Constituent Document of the Company
-#                             1. MOA summary 
-#                                 1. Main objectives in the MOA
-#                             2. AOA summary
-#                         5. Board and Board Committees
-#                             1. Board composition table 
-#                             2. Board meetings:
-#                                 1. Frequency 
-#                                 2. Notice and agenda: do they comply with Companies Act 
-#                                 3. Maintenance of Minutes: do they comply with Companies Act  
-#                             3. Board committees:
-#                                 1. Committee name, composition, designation, other observations 
-#                         6. Share holder meetings: 
-#                                 1. Frequency 
-#                                 2. Notices for shareholder meeting: do they comply with Companies Act 
-#                                 3. Minutes of the shareholder meeting : do they comply with Companies Act 
-#                         7. Statutory Registers: 
-#                                 1. Company has provided us with the copies of the following statutory registers: 
-#                                         1. List of statutory registers 
-#                         8. Corporate Social Responsibility
-#                                 1. CSR Obligations 
-#                                     1. Financial year, Expenditure in Rs. (Table format)
-#                                 2. Did the company spend the required amount for CSR for each year
-#                                 3. Review of CSR committee meeting minutes 
-#                                 4. Any other information
-#                         9. Ongoing Related party transactions: 
-#                                 1. Table of related part transactions of specific year 
-#                                     1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
-#                         10. ROC Filings and Compliance Matters 
-#                                 1. ROC Filings:
-#                                     1. Review of ROC filings
+                    Possible format for sections in the company report are as follows:
+                    ```
+                    Due Diligence Report
+                    1. Overview and business of the company 
+                        1. Business of the company
+                        2. Key information: (from file: )
+                            1. Business segments 
+                            2. Branches
+                            3. Any other key details 
+                        3. Key findings (from file: )
+                            1. Financial performance
+                            2. Any other key finding 
+                    2. Corporate Details (from file: )
+                        1. Corporate Overview (Table format) (from file: )
+                            1. Name of the company
+                            2. Registered office
+                            3. Date of Incorporation 
+                            4. Place of Incorporation 
+                            5. Corporate Status
+                            6. Corporate Identification number (CIN)
+                            7. Authorized share capital 
+                            8. Paid up capital 
+                            9. Directors
+                                1. Name, Nationality, Date of appointment, Type of director 
+                        2. Share Capital of the company 
+                            1. Details about paid up share capital and Equity shares 
+                            2. Dividend declaration 
+                                1. Financial year, rate of dividend, amount of dividend, status of payment
+                        3. Investments by the company: 
+                            1. Any subsidiaries and associate companies 
+                            2. Other investment details 
+                        4. Constituent Document of the Company
+                            1. MOA summary 
+                                1. Main objectives in the MOA
+                            2. AOA summary
+                        5. Board and Board Committees
+                            1. Board composition table 
+                            2. Board meetings:
+                                1. Frequency 
+                                2. Notice and agenda: do they comply with Companies Act 
+                                3. Maintenance of Minutes: do they comply with Companies Act  
+                            3. Board committees:
+                                1. Committee name, composition, designation
+                        6. Share holder meetings: 
+                                1. Frequency 
+                                2. Notices for shareholder meeting: do they comply with Companies Act 
+                                3. Minutes of the shareholder meeting : do they comply with Companies Act 
+                        7. Statutory Registers: 
+                                1. Company has provided us with the copies of the following statutory registers: 
+                                        1. List of statutory registers 
+                        8. Corporate Social Responsibility
+                                1. CSR Obligations 
+                                    1. Financial year, Expenditure in Rs. (Table format)
+                                2. Did the company spend the required amount for CSR for each year
+                                3. Review of CSR committee meeting minutes 
+                                4. Any other information
+                        9. Ongoing Related party transactions: 
+                                1. Table of related part transactions of specific year 
+                                    1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
+                        10. ROC Filings and Compliance Matters 
+                                1. ROC Filings:
+                                    1. Review of ROC filings
 
-#                     For sections where there is no information available, leave them blank and state "Require more documents".
-#                     ```
+                    For sections where there is no information available, leave them blank and state "Require more documents".
+                    
+                    ```
 
-#                     Notes Content:
-#                     {escaped_content}
-#                     """,
-#                 ),
-#             ]
-#         )
+                    The notes content is divided into notes gathered from different documents. 
+                    Make sure to include the name of the documents as citation with the segregated notes.
+                    Include the list of documents as sources in the title of each section. Do not give the source for each sentence separately.  
+                    
+                    Notes Content:
+                    {escaped_content}
+                    """,
+                ),
+            ]
+        )
 
-#         chain = prompt | OpenAIGPT4O
-#         response = chain.invoke(
-#             {
-#                 "directory_name": directory_name,
-#                 "notes_content": escaped_content,
-#             }
-#         )
-#         print("Create Segregated Notes tool response:", response)
-#         segregated_notes = response.content
-#         print("Generated Segregated Notes:", segregated_notes)
+        chain = prompt | OpenAIGPT4O
+        response = chain.invoke(
+            {
+                "directory_name": directory_name,
+                "notes_content": escaped_content,
+            }
+        )
+        print("Create Segregated Notes tool response:", response)
+        segregated_notes = response.content
+        print("Generated Segregated Notes:", segregated_notes)
 
-#         segregated_notes_file_path = os.path.join(new_directory_path, "segregated_notes.txt")
-#         with open(segregated_notes_file_path, 'w') as segregated_notes_file:
-#             segregated_notes_file.write(segregated_notes)
+        segregated_notes_file_path = os.path.join(new_directory_path, "segregated_notes.txt")
+        with open(segregated_notes_file_path, 'w') as segregated_notes_file:
+            segregated_notes_file.write(segregated_notes)
 
-#         return f"Segregated notes with citations generated and saved to '{segregated_notes_file_path}'."
-#     except Exception as e:
-#         return f"Error generating segregated notes: {e}"
-    
-    
-    
-    
+        return f"Segregated notes with citations generated and saved to '{segregated_notes_file_path}'."
+    except Exception as e:
+        return f"Error generating segregated notes: {e}"
     
  
 
@@ -835,7 +831,7 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                             ```
                             Possilbe format for main report: 
                         
-                            Due Dilligence Report
+                            Due Diligence Report
                             1. Overview and business of the company 
                                 1. Business of the company
                                 2. Key information: (from file: )
@@ -875,7 +871,7 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                                         2. Notice and agenda: do they comply with Companies Act 
                                         3. Maintenance of Minutes: do they comply with Companies Act  
                                     3. Board committees:
-                                        1. Committee name, composition, designation, other observations  (Table format)
+                                        1. Committee name, composition, designation  (Table format)
                                 6. Share holder meetings: 
                                         1. Frequency 
                                         2. Notices for shareholder meeting: do they comply with Companies Act 
@@ -949,19 +945,6 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
     except Exception as e:
         return f"Error generating report: {e}"
     
-
-# Example usage:
-# print(create_report("SK Finance Limited"))
-
- 
- 
-
- 
- 
- 
- 
- 
- 
  
 def convert_html_to_docx(directory_name: str, file_path: str) -> str:
     """Converts an HTML file to a DOCX file using the document conversion API and saves it to the specified directory."""
@@ -1002,28 +985,50 @@ def convert_html_to_docx(directory_name: str, file_path: str) -> str:
  
 
 
-# copmany_name = input("Enter company name: ")
 
-# print("Creating directory....")
-# print(create_directory(copmany_name))
+def generate_save_ddreport(company_name: str, num_links: int = 15):
+    """Generates and saves a due diligence report for the specified company."""
+    
+    print("Creating directory....")
+    directory_creation_response = create_directory(company_name)
+    print(directory_creation_response)
 
-# print("Creating links.txt file....")
-# print(write_file_tool(copmany_name, "links.txt", ""))
+    print("Creating links.txt file....")
+    links_file_creation_response = write_file_tool(company_name, "links.txt", "")
+    print(links_file_creation_response)
 
-# print(compile_links_for_company(copmany_name, 15))    
-# print("Links added to links.txt file....")
+    print("Compiling links for the company....")
+    compile_links_response = compile_links_for_company(company_name, num_links)
+    print(compile_links_response)
+    print("Links added to links.txt file....")
 
-# print("Scraping and storing links and PDFs....")
-# print(scrape_and_store_links_pdfs("Sk Finance Limited", "links.txt"))
+    print("Scraping and storing links and PDFs....")
+    scraping_response = scrape_and_store_links_pdfs(company_name, "links.txt")
+    print(scraping_response)
 
-# print("Classifying documents....")
-# print(classify_docs("Sk Finance Limited"))
+    print("Classifying documents....")
+    classification_response = classify_docs(company_name)
+    print(classification_response)
 
-# print("Taking notes....")
-# print(note_taking("SK Finance Limited", "notes.txt"))
+    print("Taking notes....")
+    note_taking_response = note_taking(company_name, "notes.txt")
+    print(note_taking_response)
+    print("Note taking completed....")
 
-# print("Note taking completed....")
+    print("Segregating notes...")
+    notes_segregating_response = create_segregated_notes(company_name, "notes.txt")
+    print(notes_segregating_response)
 
-# print(create_report("SK Finance Limited", "notes.txt"))
+    print("Creating report....")
+    report_creation_response = create_report(company_name, "segregated_notes.txt")
+    print(report_creation_response)
 
-# print(convert_html_to_docx("SK Finance Limited", "SK Finance Limited/due_diligence_report.html"))
+    print("Converting report to DOCX....")
+    conversion_response = convert_html_to_docx(company_name, os.path.join(company_name, "due_diligence_report.html"))
+    print(conversion_response)
+
+    return "Due diligence report generation and saving process completed."
+
+company_name = input("Enter company name: ")
+print(generate_save_ddreport(company_name))
+

@@ -21,11 +21,11 @@ bing_subscription_key = os.getenv("BING_SUBSCRIPTION_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 langchain_api_key = os.getenv("LANGCHAIN_API_KEY")
 os.environ["BING_SEARCH_URL"] = "https://api.bing.microsoft.com/v7.0/search"
+serper_api_key = os.getenv("SERPER_API_KEY")
 
 OpenAIGPT4O = ChatOpenAI(
     model="gpt-4o"
 )
-agent_finishes  = []
 
 def scrape_website(objective: str, url: str) -> str:
     print("Starting Scraping....")
@@ -50,38 +50,6 @@ def scrape_website(objective: str, url: str) -> str:
 
     return text
 
-def summary(objective: str, content: str) -> str:
-    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
-    print("Creating summary....")
-
-    text_splitter = RecursiveCharacterTextSplitter(
-        separators=["\n\n", "\n"], chunk_size=10000, chunk_overlap=500)
-    docs = text_splitter.create_documents([content])
-    map_prompt = """
-    Write a summary of the following text for {objective}:
-    "{text}"
-    SUMMARY:
-    """
-    map_prompt_template = PromptTemplate(
-        template=map_prompt, input_variables=["text", "objective"])
-
-    summary_chain = load_summarize_chain(
-        llm=llm,
-        chain_type='map_reduce',
-        map_prompt=map_prompt_template,
-        combine_prompt=map_prompt_template,
-        verbose=True
-    )
-
-    output = summary_chain.run(input_documents=docs, objective=objective)
-
-    return output
-
-# RESULTS_PER_QUESTION = 3
-
-load_dotenv()
-serper_api_key = os.getenv("SERPER_API_KEY")
-
 def search(query, num_results=5):
     url = "https://google.serper.dev/search"
 
@@ -100,8 +68,7 @@ def search(query, num_results=5):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     if response.status_code != 200:
-        print(f"Error: {response.status_code} - {response.text}")
-        return []
+        return f"Error: {response.status_code} - {response.text}"
 
     response_data = response.json()
 
@@ -115,19 +82,6 @@ def search(query, num_results=5):
 
     return links
 
-# search_links = search("SK Finance", 24)
-# print("Search links:", search_links)
-# print("Length of search links: ", len(search_links))
-
-def web_search(question: str, links_per_query: int) -> str:
-    """Performs a web search and returns a list of links to the top results."""
-    results = search.results(question, links_per_query)
-    return [r["link"] for r in results]
-
-def scrape_website_tool(objective: str, url: str) -> str:
-    """Scrapes a website and optionally summarizes its content based on the given objective."""
-    return scrape_website(objective, url)
-
 def create_directory(directory_name: str) -> str:
     """Creates a directory with the given name in the project folder."""
     project_path = os.path.dirname(os.path.abspath(__file__))  # Assuming this script is in the project folder
@@ -137,7 +91,6 @@ def create_directory(directory_name: str) -> str:
         return f"Directory '{directory_name}' created successfully at {new_directory_path}"
     except Exception as e:
         return f"Error creating directory '{directory_name}': {e}"
-
 
 def write_file_tool(directory_name: str, file_name: str, content: str) -> str:
     """Writes a file with the given content to the specified directory within the project directory."""
@@ -269,13 +222,13 @@ def compile_links_for_company(directory_name: str, num_results: int = 5) -> str:
     queries = [
         "website pages pf ",
         "latest news on ",
-        "annual report ",
-        "management team of ",
-        "investor relations for "
-        "products and services of ",
-        "public disclosures of ",
-        "shareholding details of ",
-        "form fillings of "
+        # "annual report ",
+        # "management team of ",
+        # "investor relations for "
+        # "products and services of ",
+        # "public disclosures of ",
+        # "shareholding details of ",
+        # "form fillings of "
     ]
     
     all_links = []
@@ -598,8 +551,8 @@ def note_taking(directory_name: str, notes_file_name: str = "notes.txt") -> str:
         return f"Error researching documents: {e}"
     
 
-def create_segregated_notes(directory_name: str, notes_file_name: str = "notes.txt") -> str:
-    """Generates segregated notes with citations in a new text file based on the original notes file."""
+def create_sectioned_notes(directory_name: str, notes_file_name: str = "notes.txt") -> str:
+    """Generates sectioned notes with citations in a new text file based on the original notes file."""
     project_path = "/Users/amankothari/SarvamAI/DD_crewai"
     new_directory_path = os.path.join(project_path, directory_name)
     notes_file_path = os.path.join(new_directory_path, notes_file_name)
@@ -747,16 +700,16 @@ def create_segregated_notes(directory_name: str, notes_file_name: str = "notes.t
             }
         )
         print("Create Segregated Notes tool response:", response)
-        segregated_notes = response.content
-        print("Generated Segregated Notes:", segregated_notes)
+        sectioned_notes = response.content
+        print("Generated Segregated Notes:", sectioned_notes)
 
-        segregated_notes_file_path = os.path.join(new_directory_path, "segregated_notes.txt")
-        with open(segregated_notes_file_path, 'w') as segregated_notes_file:
-            segregated_notes_file.write(segregated_notes)
+        sectioned_notes_file_path = os.path.join(new_directory_path, "sectioned_notes.txt")
+        with open(sectioned_notes_file_path, 'w') as sectioned_notes_file:
+            sectioned_notes_file.write(sectioned_notes)
 
-        return f"Segregated notes with citations generated and saved to '{segregated_notes_file_path}'."
+        return f"Sectioned notes with citations generated and saved to '{sectioned_notes_file_path}'."
     except Exception as e:
-        return f"Error generating segregated notes: {e}"
+        return f"Error generating sectioned notes: {e}"
     
  
 
@@ -811,7 +764,7 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                     2. Compare the information and take a call on what should be the right heads under which we can put the information.
                     3. Wherever it is importnat for the information to be collated, it should be collated as a table or bullets. 
                     4. If there is a column within a table that is empty, that column should be deleted. We cannot have incomplete columns in the main report. 
-                    5. The report should be crisp and concise. Even the layout has to be dense.
+                    5. The report should be crisp and concise. Even the layout has to be dense. It should use third person voice.
                     6. Begin the report with a section on key insights which should be synthesis of the notes content. You are not expected to state the facts here but make a synthesis of the facts.
                     NOTE: Synthesis is explaining the understanding of the facts in a concise manner with some extrapolation on things to look out for.
                     
@@ -897,9 +850,10 @@ def create_report(directory_name: str, notes_file_name: str = "notes.txt") -> st
                             DO NOT MAKE UP ANY INFORMATION. If for a section there is no information available, move that entire section at the end of the main report. This may require you to reformat the report and 
                             change the numbering.  If there is a column within a table that is empty, that column should be deleted. We cannot have incomplete columns in the main report. 
                             For someone reading this report we do not want missing information to be shown in various places. Hence, these sections needs to be placed at the end. 
-                            just ADD "Require more documents for these sections:" as the title and add the sections below this heading.
+                            just ADD "Require more documents for these sections:" as the title and add the sections below this heading. 
                             
-                            
+                            Include details which are applicable only from a legal due diligence perspective. 
+                    
                             For example: If you do not have enough information for the Share Capital of the company, Investments by the company, Board meetings, Corposate Social Responsibility section, add these
                             sections at the end of the report.  
                             
@@ -984,51 +938,58 @@ def convert_html_to_docx(directory_name: str, file_path: str) -> str:
 # print(convert_html_to_docx("SK Finance Limited", "SK Finance Limited/due_diligence_report.html"))
  
 
-
-
-def generate_save_ddreport(company_name: str, num_links: int = 15):
-    """Generates and saves a due diligence report for the specified company."""
+# def generate_save_ddreport(company_name: str, num_links: int = 15):
+#     """Generates and saves a due diligence report for the specified company."""
     
-    print("Creating directory....")
-    directory_creation_response = create_directory(company_name)
-    print(directory_creation_response)
+#     print("Creating directory....")
+#     directory_creation_response = create_directory(company_name)
+#     print(directory_creation_response)
 
-    print("Creating links.txt file....")
-    links_file_creation_response = write_file_tool(company_name, "links.txt", "")
-    print(links_file_creation_response)
+#     print("Creating links.txt file....")
+#     links_file_creation_response = write_file_tool(company_name, "links.txt", "")
+#     print(links_file_creation_response)
 
-    print("Compiling links for the company....")
-    compile_links_response = compile_links_for_company(company_name, num_links)
-    print(compile_links_response)
-    print("Links added to links.txt file....")
+#     print("Compiling links for the company....")
+#     compile_links_response = compile_links_for_company(company_name, num_links)
+#     print(compile_links_response)
+#     print("Links added to links.txt file....")
 
-    print("Scraping and storing links and PDFs....")
-    scraping_response = scrape_and_store_links_pdfs(company_name, "links.txt")
-    print(scraping_response)
+#     print("Scraping and storing links and PDFs....")
+#     scraping_response = scrape_and_store_links_pdfs(company_name, "links.txt")
+#     print(scraping_response)
 
-    print("Classifying documents....")
-    classification_response = classify_docs(company_name)
-    print(classification_response)
+#     print("Classifying documents....")
+#     classification_response = classify_docs(company_name)
+#     print(classification_response)
 
-    print("Taking notes....")
-    note_taking_response = note_taking(company_name, "notes.txt")
-    print(note_taking_response)
-    print("Note taking completed....")
+#     print("Taking notes....")
+#     note_taking_response = note_taking(company_name, "notes.txt")
+#     print(note_taking_response)
 
-    print("Segregating notes...")
-    notes_segregating_response = create_segregated_notes(company_name, "notes.txt")
-    print(notes_segregating_response)
+#     print("Sectioning notes...")
+#     notes_sectioned_response = create_sectioned_notes(company_name, "notes.txt")
+#     print(notes_sectioned_response)
 
-    print("Creating report....")
-    report_creation_response = create_report(company_name, "segregated_notes.txt")
-    print(report_creation_response)
+#     print("Creating report....")
+#     report_creation_response = create_report(company_name, "sectioned_notes.txt")
+#     print(report_creation_response)
 
-    print("Converting report to DOCX....")
-    conversion_response = convert_html_to_docx(company_name, os.path.join(company_name, "due_diligence_report.html"))
-    print(conversion_response)
+#     print("Converting report to DOCX....")
+#     conversion_response = convert_html_to_docx(company_name, os.path.join(company_name, "due_diligence_report.html"))
+#     print(conversion_response)
 
-    return "Due diligence report generation and saving process completed."
+#     return "Due diligence report generation and saving process completed."
 
-company_name = input("Enter company name: ")
-print(generate_save_ddreport(company_name))
+# company_name = input("Enter company name: ")
+# print(generate_save_ddreport(company_name))
 
+
+# notes_sectioned_response = create_sectioned_notes("SK Financial", "notes.txt")
+# print(notes_sectioned_response)
+
+
+# report_creation_response = create_report("SK Financial", "sectioned_notes.txt")
+# print(report_creation_response)
+
+# conversion_response = convert_html_to_docx("SK Financial", os.path.join("SK Financial", "due_diligence_report.html"))
+# print(conversion_response)

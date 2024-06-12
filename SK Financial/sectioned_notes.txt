@@ -1,0 +1,106 @@
+```
+Due Diligence Report
+
+1. Overview and Business of the Company
+    1. Business of the company
+        - SK Finance Limited is a finance company with a differentiated approach specializing in facilitating financial inclusion for the unserved and underserved sections of society. (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+        - Known for a customer-first and personalized approach with over 29 years of experience as a trusted NBFC in India. (Source: https:__www.skfin.in_about_board-of-directors.txt)
+        - Business segments include funding for used and new commercial vehicles, tractors, two-wheelers, and MSMEs. (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+        - Products offered include Commercial Vehicle Loan, Car Loan, Tractor Loan, Construction Equipment Loan, Two-wheeler Loan, Secured Business Loan, and Home Renovation - Mortgage Loan. (Source: https:__www.skfin.in_about_board-of-directors.txt)
+    2. Key information: (from file: Annual_Report_21_22_0df1be1962-pdf.txt)
+        1. Business segments 
+            - Commercial Vehicles, Tractors, Cars, Two-wheelers, and MSMEs.
+        2. Branches
+            - Total branches: 423 across 10 states and union territories.
+        3. Any other key details 
+            - Presence in states: Rajasthan, Haryana, Madhya Pradesh, Chhattisgarh, Gujarat, Himachal Pradesh, Maharashtra, Uttarakhand, Punjab, and Delhi NCR.
+            - Over 60 active lending partnerships with major institutions.
+            - Investor profiles include Norwest Venture Partners, Texas Pacific Group, Evolvence Coinvest, Baring Private Equity India AIF, Karma Holdings Mauritius Limited, IIFL Special Opportunities Fund, MIT Investment Management Company, and others.
+    3. Key findings (from file: Annual_Report_21_22_0df1be1962-pdf.txt)
+        1. Financial performance
+            - Key performance indicators for 2021-22: AUM ₹4,714 crore, Disbursements ₹3,226 crore, Net Profit ₹143 crore, Capital Adequacy 30.4%.
+            - Gross Stage 3 assets: 2.83%, Net Stage 3 assets: 2.04%.
+        2. Any other key finding 
+            - Digital initiatives include AI chatbot for customer service, integrated WhatsApp communication, paperless processes, and AI-based recommendation systems.
+
+2. Corporate Details (from file: https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt)
+    1. Corporate Overview (Table format) (from file: https:__www.tofler.in_sk-finance-limited_company_U65923RJ1994PLC009051_financials.txt)
+        1. Name of the company: SK Finance Limited
+        2. Registered office: 36, Dhuleshwar Garden, Jaipur-302001
+        3. Date of Incorporation: 1994
+        4. Place of Incorporation: Rajasthan, India
+        5. Corporate Status: Active
+        6. Corporate Identification number (CIN): U65923RJ1994PLC009051
+        7. Authorized share capital: ₹30,00,00,000 divided into 15,00,00,000 equity shares of ₹2 each
+        8. Paid up capital: ₹5,81,66,148.25
+        9. Directors
+            - Name, Nationality, Date of appointment, Type of director:
+                - Amar Lal Daultani: Chairperson and Non-Executive Independent Director
+                - Rajendra Kumar Setia: Managing Director and Chief Executive Officer
+                - Yash Setia: Whole-time Director
+                - Anand Raghavan: Non-Executive Independent Director
+                - Nanda Sameer Dave: Non-Executive Independent Director
+                - Mukul Mathur: Non-Executive Independent Director
+                - Simit Batra: Non-Executive Director
+                - Debanshi Basu: Non-Executive Director
+    2. Share Capital of the company 
+        1. Details about paid up share capital and Equity shares 
+            - Paid-up equity share capital of ₹5,81,66,148.25 (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+        2. Dividend declaration 
+            - Require more documents
+    3. Investments by the company: 
+        1. Any subsidiaries and associate companies 
+            - Require more documents
+        2. Other investment details 
+            - Require more documents
+    4. Constituent Document of the Company
+        1. MOA summary 
+            1. Main objectives in the MOA
+                - Require more documents
+        2. AOA summary
+            - Require more documents
+    5. Board and Board Committees
+        1. Board composition table 
+            - Board of Directors includes Independent Directors, Nominee Directors, and Promoter Directors. (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+        2. Board meetings:
+            1. Frequency 
+                - Require more documents
+            2. Notice and agenda: do they comply with Companies Act 
+                - Require more documents
+            3. Maintenance of Minutes: do they comply with Companies Act  
+                - Require more documents
+        3. Board committees:
+            1. Committee name, composition, designation
+                - Committees of the Board include Audit Committee, Nomination and Remuneration Committee, Corporate Social Responsibility Committee, Risk Management Committee, IT Strategy Committee, Executive Committee, and Asset Liability Management Committee. (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+    6. Shareholder meetings: 
+        1. Frequency 
+            - Require more documents
+        2. Notices for shareholder meeting: do they comply with Companies Act 
+            - Require more documents
+        3. Minutes of the shareholder meeting : do they comply with Companies Act 
+            - Require more documents
+    7. Statutory Registers: 
+        1. Company has provided us with the copies of the following statutory registers: 
+            - Require more documents
+    8. Corporate Social Responsibility
+        1. CSR Obligations 
+            1. Financial year, Expenditure in Rs. (Table format)
+                - Require more documents
+        2. Did the company spend the required amount for CSR for each year
+            - Require more documents
+        3. Review of CSR committee meeting minutes 
+            - Require more documents
+        4. Any other information
+            - CSR activities include support for education, healthcare, animal welfare, road safety, and environment sustainability. (Source: Annual_Report_21_22_0df1be1962-pdf.txt)
+            - SK Finance Limited organized 'Dayitva' a blood donation camp in more than 20 cities across India on December 4th, 2023. (Source: https:__www.skfin.in_mediacenter.txt)
+            - SK Foundation adopted and developed infrastructure for a school in Jaipur, also paying outstanding fees for 150 students. (Source: https:__www.skfin.in_mediacenter.txt)
+    9. Ongoing Related party transactions: 
+        1. Table of related part transactions of specific year 
+            1. Details of the Contracting Party, name of interested director, name of relationship, nature of transaction, value of transaction as per last financial year 
+                - Require more documents
+    10. ROC Filings and Compliance Matters 
+        1. ROC Filings:
+            1. Review of ROC filings
+                - Extensive historical records of payments and compliance certificates dating back to 2016. (Source: https:__www.skfin.in_investor_stock-exchange.txt)
+
+```

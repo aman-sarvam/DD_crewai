@@ -10,6 +10,8 @@ python = ">=3.10,<=3.13"
 python-dotenv = "^1.0.1"
 crewai = {extras = ["tools"], version = "^0.30.11"}
 selenium = "^4.21.0"
+streamlit = "^1.35.0"
+openai = "^1.33.0"
 
 
 [build-system]
